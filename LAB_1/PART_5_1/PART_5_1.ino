@@ -10,16 +10,16 @@ Lab 1 - Part 5.1
 Acknowledgments:	Blink.ino from example sketches & "Blink Without Delay" from Arduino community forums.
 */
 
-int state_GPIO10 = HIGH;
-int state_GPIO13 = LOW;
-int state_GPIO2  = LOW;
-int counter      = 0;    //counter will count how long the speaker has been playing
+int state_GPIO10 = HIGH;  //Initialize state
+int state_GPIO13 = LOW;   //Initialize state
+int state_GPIO2  = LOW;   //Initialize state
+int counter      = 0;     //counter will count how long the speaker has been playing
 
-unsigned long prevTimeLED     = 0;
-unsigned long prevTimeSpeaker = 0;
+unsigned long prevTimeLED     = 0; //initialize an empty variable for keeping track of LED timing
+unsigned long prevTimeSpeaker = 0; //initialize an empty variable for keeping track of Speaker timing
 
-const long intervalLED     = 200; // set interval to 200ms
-const long intervalSpeaker = 2;   // set interval to 2ms
+const long intervalLED     = 200; // set LED interval to 200ms
+const long intervalSpeaker = 2;   // set Speaker interval to 2ms
 
 // the setup function runs once when you press reset or power the board
 void setup() {
