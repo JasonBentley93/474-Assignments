@@ -4,7 +4,7 @@ ECE 474,  [DATE]
 Jason Bentley
 
 
-Lab 1 - Part 2.2
+Lab 1 - Part 1.8
 
 
 Acknowledgments:	Blink.ino from example sketches
