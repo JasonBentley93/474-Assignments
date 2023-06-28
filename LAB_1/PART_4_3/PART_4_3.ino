@@ -1,10 +1,10 @@
 /* University of Washington
-ECE 474,  [DATE]
+ECE 474,  6/27/23
 *
 Jason Bentley
 
 
-Lab 1 - Part 5.1
+Lab 1 - Part 4.3
 
 
 Acknowledgments:	Blink.ino from example sketches
@@ -12,7 +12,7 @@ Acknowledgments:	Blink.ino from example sketches
 
 // the setup function runs once when you press reset or power the board
 void setup() {
-  // initialize digital pin GPIO 10 and GPIO 2 as an output.
+  // initialize digital pin GPIO 10, GPIO13, and GPIO 2 as an output.
   pinMode(10, OUTPUT);
   pinMode(13, OUTPUT);
   pinMode(2, OUTPUT);
