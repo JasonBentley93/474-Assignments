@@ -1,12 +1,7 @@
 /* University of Washington
 ECE 474,  6/27/23
-*
 Jason Bentley
-
-
 Lab 1 - Part 2.2
-
-
 Acknowledgments:	Blink.ino from example sketches
 */
 
