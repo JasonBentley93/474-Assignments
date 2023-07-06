@@ -165,6 +165,7 @@ char* length_pad(char *st, char* st_buffer, int n) {
     return st_buffer;
 }
 
+
 void sums_and_squares3(int N){
     char *l1;
     char *l2;
@@ -262,6 +263,7 @@ unsigned char  convert(int card, int suit) {
     return (card <<4) | suit;
 }
 
+
 // Test if a card byte is a valid card
 int valid_card(unsigned char card){
     int cardInt = card;
@@ -275,12 +277,14 @@ int valid_card(unsigned char card){
 
     return 1;
 }
-// your code for gsuit and gcard here
 
+
+// your code for gsuit and gcard here
 int gcard(unsigned char card) {
     
     return card >> 4;
 }
+
 
 int gsuit(unsigned char card) {
     
@@ -360,12 +364,13 @@ void deal(int M, unsigned char hand[7], int deck[N_DECK][2]) {
 
     for (int i = 0; i < M; i++)
     {
-        hand[i] = convert(deck[i+ddc][0], deck[i+ddc][1]);
+        hand[i] = convert(deck[i + ddc][0], deck[i + ddc][1]);
     }
    
     dealer_deck_count += M;
 
 }
+
 
 void printhand(int M, unsigned char* hand, char* buff1) {
 
@@ -387,32 +392,14 @@ void printhand(int M, unsigned char* hand, char* buff1) {
 int pairs(int M, unsigned char hand[]) {
 
     int counter = 0;
-    
-    for (int i = 0; i < M; i++)
-    {
-        for (int j = i + 1; j < M; ++j)
-        {
-            if (gcard(hand[i]) == gcard(hand[j]))
-            {
-                counter++;
-            }
-        }
-    }
 
-    return counter;
-}
-
-int trip_s(int M, unsigned char hand[]) {
-    
-     int counter = 0;
-    
-    for (int i = 0; i < M; i++)
+    if (four_kind(M, hand) < 1 && trip_s(M, hand) < 1)
     {
-        for (int j = i + 1; j < M; j++)
+        for (int i = 0; i < M; i++)
         {
-            for (int k = j + 1; k < M; k++)
+            for (int j = i + 1; j < M; ++j)
             {
-                if (gcard(hand[i]) == gcard(hand[j]) && gcard(hand[j]) == gcard(hand[k]))
+                if (gcard(hand[i]) == gcard(hand[j]))
                 {
                     counter++;
                 }
@@ -422,6 +409,31 @@ int trip_s(int M, unsigned char hand[]) {
 
     return counter;
 }
+
+
+int trip_s(int M, unsigned char hand[]) {
+    
+    int counter = 0;
+
+    {
+        for (int i = 0; i < M; i++)
+        {
+            for (int j = i + 1; j < M; j++)
+            {
+                for (int k = j + 1; k < M; k++)
+                {
+                    if (gcard(hand[i]) == gcard(hand[j]) && gcard(hand[j]) == gcard(hand[k]))
+                    {
+                        counter++;
+                    }
+                }
+            }
+        }
+    }
+
+    return counter;
+}
+
 
 int four_kind(int M, unsigned char hand[]) {
     
