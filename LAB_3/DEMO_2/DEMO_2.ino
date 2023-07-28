@@ -65,7 +65,7 @@ void setup() {
 
   TCCR4A = 0;
   TCCR4B = (1 << WGM42) | (1 << CS41) | (1 << CS40);
-  OCR4A = 25;
+  OCR4A = 27;
 
   TIMSK4 |= (1 << OCIE4A);
 

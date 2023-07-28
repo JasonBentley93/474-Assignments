@@ -29,7 +29,7 @@
 #define KILL_FLASH_LED_TASK    &processList[0]
 #define KILL_PLAY_SPEAKER_TASK &processList[1]
 
-#define NOTE_TIME   500 //100ms
+#define NOTE_TIME   1000 //100ms
 
 
 int LED_timer = 0;
@@ -39,6 +39,8 @@ long tune_timer   = 0;
 int tune_elem     = 0;
 int tune_state    = 0;
 long note_timer    = 0;
+
+int sFlag = 1;
 
 int currentTask   = 0;
 int newTask       = 0;
@@ -83,6 +85,16 @@ void setup() {
   processList[1].name          = 'b';
   processList[1].taskRunAmount = 0;
 
+
+// Initialize timer for setting up a clock.
+  TCCR4A = 0;
+  TCCR4B = (1 << WGM42) | (1 << CS41) | (1 << CS40);
+  OCR4A = 25;
+
+  TIMSK4 |= (1 << OCIE4A);
+
+  sei();
+
 }
 
 /**
@@ -91,18 +103,17 @@ void setup() {
   */
 void loop() {
     scheduler();
-    delayMicroseconds(80); //run every 100 microseconds
 }
 
 /**
   * Flashes an external LED for a given amount of time, then turns off for another amount of time
   */
 void flashLED(){
-    if(LED_state == LOW && LED_timer == 3750 || LED_timer == 0){
+    if(LED_state == LOW && LED_timer == 7500){
         digitalWrite(LED_PIN, HIGH);
         LED_state = HIGH;
         LED_timer = 0;
-    }else if(LED_state == HIGH && LED_timer == 1250){
+    }else if(LED_state == HIGH && LED_timer == 2500){
         digitalWrite(LED_PIN, LOW);
         LED_state = LOW;
         LED_timer = 0;
@@ -118,32 +129,26 @@ void flashLED(){
 void playSpeaker() { 
     int period_half = 5000/(mario[tune_elem] + 1);
 
-    if(tune_state == LOW && tune_timer == period_half && tune_elem != 21){
-        digitalWrite(TONE_PIN, HIGH);
-        tune_timer = 0;
-        tune_state = HIGH;
-        return;
-    }
-
-    if(tune_state == HIGH && tune_timer == period_half && tune_elem != 21){
-        digitalWrite(TONE_PIN, LOW);
-        tune_timer = 0;
-        tune_state = LOW;
-        return;
-    }
-
+    if(tune_timer == period_half && tune_elem != 21){
+        if(tune_state == LOW){
+            digitalWrite(TONE_PIN, HIGH);
+            tune_timer = 0;
+            tune_state = HIGH;
+        } else if(tune_state == HIGH){
+            digitalWrite(TONE_PIN, LOW);
+            tune_timer = 0;
+            tune_state = LOW;
+        }
+    } 
+    
     if(note_timer == NOTE_TIME && tune_elem != 21){
         tune_elem++;
         note_timer = 0;
         tune_timer = 0;
-        return;
-    }
-
-    if(tune_elem == 21 && tune_timer == 16000){
+    } else if(tune_elem == 21 && tune_timer == 40000){
         tune_elem = 0;
         tune_timer = 0;
         note_timer = 0;
-        return;
     }
 
 }
@@ -214,16 +219,22 @@ void scheduler(){
   // otherwise sets task to new task
   newTask = currentTask;
   // when task is in ready state, execute
-  if (processList[currentTask].state == READY && processList[currentTask].function == playSpeaker) {
+  if (processList[currentTask].state != 0) {
     function_ptr(processList[currentTask].function);
-    tune_timer++;
-    note_timer++;
-  } else if (processList[currentTask].state == READY && processList[currentTask].function == flashLED){
-    function_ptr(processList[currentTask].function);
-    LED_timer++;
   }
-
   // increment currentTask to traverse processList
   currentTask++;
+
+    if (sFlag == 1){
+    LED_timer++;
+    tune_timer++;
+    note_timer++;
+    sFlag = 0;
+  }
+}
+
+ISR(TIMER4_COMPA_vect) {
+  sFlag = 1;
+  TIFR4 |= (1 << OCF4A);
 }
 

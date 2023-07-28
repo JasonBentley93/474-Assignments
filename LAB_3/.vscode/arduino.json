@@ -2,5 +2,5 @@
     "port": "COM17",
     "configuration": "cpu=atmega2560",
     "board": "arduino:avr:mega",
-    "sketch": "DEMO_4\\DEMO_4.ino"
+    "sketch": "DEMO_6\\DEMO_6.ino"
 }
