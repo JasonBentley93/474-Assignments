@@ -1,3 +1,15 @@
+/**
+ * @file RT_1.ino
+ * @brief A program to flash an external LED and play the maario theme on an external speaker using freeRTOS implemented on the Arudino Mega.
+ * @author Jason Bentley
+ * @date 8/16/2023
+ *
+ * 
+ * The file includes the following modules:
+ * - @link group1 INITIALIZATION @endlink
+ * - @link group2 TASKS @endlink
+ */
+
 #include <Arduino_FreeRTOS.h>
 
 #define NOTE_E 659 
@@ -23,11 +35,17 @@ int mario[] = {NOTE_E, NOTE_R, NOTE_E, NOTE_R, NOTE_R, NOTE_E, NOTE_R, NOTE_R, N
               NOTE_E, NOTE_R, NOTE_R, NOTE_G, NOTE_R, NOTE_R, NOTE_R, NOTE_R, NOTE_R, NOTE_g, 
               NOTE_R};
 
-// define the task for Song
-void TaskSong( void *pvParameters );
-void playSpeaker();
 
-// the setup function runs once when you press reset or power the board
+/**
+ * @defgroup group1 INITIALIZATION
+ * @{
+ */
+
+/**
+ * @brief This function creates all tasks necessary to run this program and also intializes TIMER4
+ * @param none
+ * @note see @link group2 TASKS @endlink for more information on tasks
+ */
 void setup() {
 
   TCCR4A  = 0;
@@ -36,30 +54,32 @@ void setup() {
   TIMSK4 |= (1 << OCIE4A);
   sei();
 
-  // Now set up two tasks to run independently.
+
   xTaskCreate(
     TaskSong
-    ,  "Song"   // A name just for humans
-    ,  128  // This stack size can be checked & adjusted by reading the Stack Highwater
+    ,  "Song"   
+    ,  128  
     ,  NULL
-    ,  1  // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
+    ,  1  
     ,  NULL );
 
   vTaskStartScheduler();
 }
 
-void loop()
-{
-  // Empty. Things are done in Tasks.
-}
+/**
+ * @brief Empty loop function necessary to compile *.ino file
+ * @param none
+ * @note Scheduling is handled by freeRTOS scheduler
+ */
+void loop(){}
+/** @} */ // end of group1
 
 /*--------------------------------------------------*/
 /*---------------------- Tasks ---------------------*/
 /*--------------------------------------------------*/
 
-void TaskSong(void *pvParameters)  // This is a task.
+void TaskSong(void *pvParameters)
 {
-  // initialize digital LED_BUILTIN on pin 13 as an output.
   pinMode(TONE_PIN, OUTPUT);
 
   while (iteration < maxIterations){

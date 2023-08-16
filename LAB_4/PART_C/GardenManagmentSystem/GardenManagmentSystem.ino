@@ -19,7 +19,6 @@
 
 //RTOS LIBRARIES
 #include <Arduino_FreeRTOS.h>
-#include "queue.h"
 #include "task.h"
 
 //PERIPHERAL IO LIBRARIES
@@ -127,7 +126,7 @@ void setup(){
  * @note Scheduling is handled by freeRTOS scheduler
  */
 void loop(){}
-/** @} */ // end of group
+/** @} */ // end of group1
 
 
 //=================================================//
@@ -751,4 +750,4 @@ void finishWateringAlertMessages(){
 }
 
 
-/** @} */ // end of group2
+/** @} */ // end of group3

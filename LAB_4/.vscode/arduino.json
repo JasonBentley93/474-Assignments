@@ -1,6 +1,6 @@
 {
     "configuration": "cpu=atmega2560",
     "board": "arduino:avr:mega",
-    "sketch": "PART_A\\blink_analogRead474\\blink_analogRead474.ino",
+    "sketch": "PART_C\\GardenManagmentSystem\\GardenManagmentSystem.ino",
     "port": "COM17"
 }
