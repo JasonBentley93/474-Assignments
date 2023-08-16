@@ -24,12 +24,23 @@
 */
 var NAVTREE =
 [
-  [ "GardenManagmentSystem", "index.html", ]
+  [ "GardenManagmentSystem", "index.html", [
+    [ "Modules", "modules.html", "modules" ],
+    [ "Files", "files.html", [
+      [ "File List", "files.html", "files_dup" ],
+      [ "Globals", "globals.html", [
+        [ "All", "globals.html", null ],
+        [ "Functions", "globals_func.html", null ],
+        [ "Variables", "globals_vars.html", null ],
+        [ "Macros", "globals_defs.html", null ]
+      ] ]
+    ] ]
+  ] ]
 ];
 
 var NAVTREEINDEX =
 [
-"index.html"
+"_garden_managment_system_8ino.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
